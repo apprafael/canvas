@@ -9,12 +9,25 @@ import SwiftUI
 
 struct ImagesView: View {
     @State var images = [PhotoModel]()
+    let columns = [
+        GridItem(.flexible()),
+        GridItem(.flexible())
+    ]
+
     var body: some View {
-        VStack {
-            List {
+        ScrollView {
+            LazyVGrid(columns: columns, spacing: 10) {
                 ForEach(images) { image in
-                    AsyncImage(url: URL(string: image.src.original))
-                        .frame(height: 300)
+                    AsyncImage(url:  URL(string: image.src.original)) { image in
+                        image
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 200, height: 300)
+                    } placeholder: {
+                        ProgressView()
+                            .frame(width: 200, height: 300)
+                    }
+
                 }
             }
         }
