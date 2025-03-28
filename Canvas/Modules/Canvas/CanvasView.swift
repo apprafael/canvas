@@ -9,21 +9,27 @@ import SwiftUI
 
 struct CanvasView: View {
     @State private var isSheetPresented = false
-    @State private var selectedImages: [Image] = []
-    @State private var position: CGPoint = CGPoint(x: 100, y: 100)
+    @State private var images: [Image] = []
+    @State private var selectedImage: Image = Image(systemName: "")
 
     var body: some View {
-        setCanvasImage()
-        Spacer()
-        setTabView()
-            .sheet(isPresented: $isSheetPresented) {
-                ImagesView(selectedImages: $selectedImages)
-            }
+        VStack {
+            setCanvasImage()
+            Spacer()
+            setTabView()
+                .sheet(isPresented: $isSheetPresented) {
+                    ImagesView(selectedImages: $images)
+                }
+        }
+        .background(Color.white)
+        .onTapGesture {
+            selectedImage = Image(systemName: "")
+        }
     }
 
     private func setCanvasImage() -> some View {
-        ForEach(selectedImages.indices, id: \.self) { imageIdx in
-            CanvasImageView(selectedImage: selectedImages[imageIdx])
+        ForEach(images.indices, id: \.self) { imageIdx in
+            CanvasImageView(image: images[imageIdx], selectedImage: $selectedImage)
         }
     }
 
