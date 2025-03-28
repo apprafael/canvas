@@ -9,6 +9,9 @@ import SwiftUI
 
 struct ImagesView: View {
     @StateObject var viewModel = ImagesViewModel()
+    @Binding var selectedImage: Image
+    @Environment(\.dismiss) var dismiss
+
     let columns = [
         GridItem(.flexible()),
         GridItem(.flexible())
@@ -23,11 +26,14 @@ struct ImagesView: View {
                             .resizable()
                             .scaledToFit()
                             .frame(width: 200, height: 300)
+                            .onTapGesture {
+                                selectedImage = image
+                                dismiss()
+                            }
                     } placeholder: {
                         ProgressView()
                             .frame(width: 200, height: 300)
                     }
-
                 }
             }
         }
@@ -36,8 +42,4 @@ struct ImagesView: View {
             viewModel.fetchData()
         }
     }
-}
-
-#Preview {
-    ImagesView()
 }
