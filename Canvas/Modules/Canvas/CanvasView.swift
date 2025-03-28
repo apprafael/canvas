@@ -9,7 +9,7 @@ import SwiftUI
 
 struct CanvasView: View {
     @State private var isSheetPresented = false
-    @State private var selectedImage: Image = Image("placeholder")
+    @State private var selectedImages: [Image] = []
     @State private var position: CGPoint = CGPoint(x: 100, y: 100)
 
     var body: some View {
@@ -17,21 +17,14 @@ struct CanvasView: View {
         Spacer()
         setTabView()
             .sheet(isPresented: $isSheetPresented) {
-                ImagesView(selectedImage: $selectedImage)
+                ImagesView(selectedImages: $selectedImages)
             }
     }
 
     private func setCanvasImage() -> some View {
-        selectedImage
-            .resizable()
-            .frame(width: 100, height: 100)
-            .position(position)
-            .gesture(
-                DragGesture()
-                    .onChanged { value in
-                        position = value.location
-                    }
-            )
+        ForEach(selectedImages.indices, id: \.self) { imageIdx in
+            ImageView(selectedImage: selectedImages[imageIdx])
+        }
     }
 
     private func setTabView() -> some View {
