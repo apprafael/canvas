@@ -21,24 +21,28 @@ struct ImagesView: View {
         ScrollView {
             LazyVGrid(columns: columns, spacing: 10) {
                 ForEach(viewModel.images) { image in
-                    AsyncImage(url:  URL(string: image.src.tiny)) { image in
-                        image
-                            .resizable()
-                            .scaledToFit()
-                            .onTapGesture {
-                                selectedImages.append(image)
-                                dismiss()
-                            }
-                        
-                    } placeholder: {
-                        ProgressView()
-                    }
+                    setImage(image: image)
                 }
             }
         }
         .padding()
         .onAppear {
             viewModel.fetchData()
+        }
+    }
+
+    private func setImage(image: PhotoModel) -> some View {
+        AsyncImage(url:  URL(string: image.src.tiny)) { image in
+            image
+                .resizable()
+                .scaledToFit()
+                .onTapGesture {
+                    selectedImages.append(image)
+                    dismiss()
+                }
+
+        } placeholder: {
+            ProgressView()
         }
     }
 }
