@@ -1,5 +1,5 @@
 //
-//  ImageView.swift
+//  CanvasImageView.swift
 //  Canvas
 //
 //  Created by Rafael Almeida on 28/03/25.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ImageView: View {
+struct CanvasImageView: View {
     @State var selectedImage: Image
     @State var position: CGPoint = CGPoint(x: 100, y: 100)
 

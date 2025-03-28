@@ -23,7 +23,7 @@ struct CanvasView: View {
 
     private func setCanvasImage() -> some View {
         ForEach(selectedImages.indices, id: \.self) { imageIdx in
-            ImageView(selectedImage: selectedImages[imageIdx])
+            CanvasImageView(selectedImage: selectedImages[imageIdx])
         }
     }
 
