@@ -21,19 +21,20 @@ struct ImagesView: View {
         ScrollView {
             LazyVGrid(columns: columns, spacing: 10) {
                 ForEach(viewModel.images) { image in
-                    AsyncImage(url:  URL(string: image.src.original)) { image in
+                    AsyncImage(url:  URL(string: image.src.tiny)) { image in
                         image
                             .resizable()
                             .scaledToFit()
-                            .frame(width: 200, height: 300)
                             .onTapGesture {
                                 selectedImages.append(image)
                                 dismiss()
                             }
+                        
                     } placeholder: {
                         ProgressView()
-                            .frame(width: 200, height: 300)
                     }
+                    .frame(width: 200, height: 200)
+                        .clipped()
                 }
             }
         }
