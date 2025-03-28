@@ -14,7 +14,7 @@ struct CanvasImageView: View {
     var body: some View {
         selectedImage
             .resizable()
-            .frame(width: 100, height: 100)
+            .frame(width: 140, height: 100)
             .position(position)
             .gesture(
                 DragGesture()

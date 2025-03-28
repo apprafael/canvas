@@ -33,8 +33,6 @@ struct ImagesView: View {
                     } placeholder: {
                         ProgressView()
                     }
-                    .frame(width: 200, height: 200)
-                        .clipped()
                 }
             }
         }
