@@ -28,6 +28,7 @@ struct CanvasImageView: View {
                     .onChanged { value in
                         guard selectedImage == image else { return }
                         position = value.location
+                        snapToBorder()
                     }
             )
             .gesture(
@@ -37,5 +38,22 @@ struct CanvasImageView: View {
                         scale = value
                     }
             )
+    }
+
+    private func snapToBorder() {
+        let screenBounds = UIScreen.main.bounds
+        let margin: CGFloat = 100
+
+        if position.x >= screenBounds.width - margin && position.x <= screenBounds.width - 70.0 {
+            position.x = screenBounds.width - 70.0
+        } else if position.x <= margin && position.x >= 70 {
+            position.x = 70
+        }
+
+        if position.y >= screenBounds.height - margin && position.y <= screenBounds.height - 50.0 {
+            position.y = screenBounds.height - 50.0
+        } else if position.y <= margin && position.y >= 50 {
+            position.y = 50
+        }
     }
 }
