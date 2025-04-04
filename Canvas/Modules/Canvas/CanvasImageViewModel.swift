@@ -11,4 +11,8 @@ struct CanvasImageModel: Identifiable {
     var id = UUID()
     let image: Image
     var position: CGPoint = CGPoint(x: 100, y: 100)
+    var showRightSnapLine = false
+    var showLeftSnapLine = false
+    var showTopSnapLine = false
+    var showBottomSnapLine = false
 }

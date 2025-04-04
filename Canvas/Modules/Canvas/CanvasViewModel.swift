@@ -26,22 +26,35 @@ class CanvasViewModel: ObservableObject {
             if (images[selectedImageIndex].position.x - images[index].position.x) >= 140 &&
                 (images[selectedImageIndex].position.x - images[index].position.x) <= 160 {
                 images[selectedImageIndex].position.x = images[index].position.x + 140
+                images[index].showRightSnapLine = true
+            } else {
+                images[index].showRightSnapLine = false
             }
 
             if (images[index].position.x - images[selectedImageIndex].position.x) >= 140 &&
                 (images[index].position.x - images[selectedImageIndex].position.x) <= 160 {
                 images[selectedImageIndex].position.x = images[index].position.x - 140
+                images[index].showLeftSnapLine = true
+            } else {
+                images[index].showLeftSnapLine = false
             }
 
             if (images[selectedImageIndex].position.y - images[index].position.y) >= 100 &&
                 (images[selectedImageIndex].position.y - images[index].position.y) <= 120 {
                 images[selectedImageIndex].position.y = images[index].position.y + 100
+                images[index].showBottomSnapLine = true
+            } else {
+                images[index].showBottomSnapLine = false
             }
 
             if (images[index].position.y - images[selectedImageIndex].position.y) >= 100 &&
                 (images[index].position.y - images[selectedImageIndex].position.y) <= 120 {
                 images[selectedImageIndex].position.y = images[index].position.y - 100
+                images[index].showTopSnapLine = true
+            } else {
+                images[index].showTopSnapLine = false
             }
+
         }
     }
 
