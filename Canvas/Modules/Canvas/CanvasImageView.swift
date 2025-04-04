@@ -8,52 +8,33 @@
 import SwiftUI
 
 struct CanvasImageView: View {
-    @State var image: Image
-    @Binding var selectedImage: Image
-    @State var position: CGPoint = CGPoint(x: 100, y: 100)
+    @Binding var canvasImageModel: CanvasImageModel
     @State private var scale: CGFloat = 1.0
+    @Binding var selectedImageID: UUID
 
     var body: some View {
-        image
+        canvasImageModel.image
             .resizable()
             .frame(width: 140, height: 100)
-            .border(selectedImage == image ? Color.yellow : Color.clear, width: 4)
-            .position(position)
+            .border(selectedImageID == canvasImageModel.id ? Color.yellow : Color.clear, width: 4)
+            .position(canvasImageModel.position)
             .scaleEffect(scale)
             .onTapGesture {
-                selectedImage = image
+                selectedImageID = canvasImageModel.id
             }
             .gesture(
                 DragGesture()
                     .onChanged { value in
-                        guard selectedImage == image else { return }
-                        position = value.location
-                        snapToBorder()
+                        guard selectedImageID == canvasImageModel.id else { return }
+                        canvasImageModel.position = value.location
                     }
             )
             .gesture(
                 MagnificationGesture()
                     .onChanged { value in
-                        guard selectedImage == image else { return }
+                        guard selectedImageID == canvasImageModel.id else { return }
                         scale = value
                     }
             )
-    }
-
-    private func snapToBorder() {
-        let screenBounds = UIScreen.main.bounds
-        let margin: CGFloat = 100
-
-        if position.x >= screenBounds.width - margin && position.x <= screenBounds.width - 70.0 {
-            position.x = screenBounds.width - 70.0
-        } else if position.x <= margin && position.x >= 70 {
-            position.x = 70
-        }
-
-        if position.y >= screenBounds.height - margin && position.y <= screenBounds.height - 50.0 {
-            position.y = screenBounds.height - 50.0
-        } else if position.y <= margin && position.y >= 50 {
-            position.y = 50
-        }
     }
 }

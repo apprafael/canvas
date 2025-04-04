@@ -9,8 +9,7 @@ import SwiftUI
 
 struct CanvasView: View {
     @State private var isSheetPresented = false
-    @State private var images: [Image] = []
-    @State private var selectedImage: Image = Image(systemName: "")
+    @StateObject var viewModel = CanvasViewModel()
 
     var body: some View {
         VStack {
@@ -18,18 +17,23 @@ struct CanvasView: View {
             Spacer()
             setTabView()
                 .sheet(isPresented: $isSheetPresented) {
-                    ImagesView(selectedImages: $images)
+                    ImagesView(selectedImages: $viewModel.images)
                 }
         }
         .background(Color.white)
         .onTapGesture {
-            selectedImage = Image(systemName: "")
+            viewModel.selectedImageID = UUID()
         }
     }
 
     private func setCanvasImage() -> some View {
-        ForEach(images.indices, id: \.self) { imageIdx in
-            CanvasImageView(image: images[imageIdx], selectedImage: $selectedImage)
+        ZStack {
+            ForEach(viewModel.images.indices, id: \.self) { imageIdx in
+                CanvasImageView(canvasImageModel: $viewModel.images[imageIdx], selectedImageID: $viewModel.selectedImageID)
+                    .onChange(of: viewModel.images[imageIdx].position) { oldValue, newValue in
+                        viewModel.snapToImagesIfNeeded()
+                    }
+            }
         }
     }
 
@@ -44,4 +48,11 @@ struct CanvasView: View {
         }
         .frame(height: 100)
     }
+}
+
+#Preview {
+    CanvasView(viewModel: CanvasViewModel(images: [
+        .init(image: Image(systemName: "heart")),
+        .init(image: Image(systemName: "heart.fill"))
+    ]))
 }

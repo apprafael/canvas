@@ -1,0 +1,14 @@
+//
+//  CanvasImageViewModel.swift
+//  Canvas
+//
+//  Created by Rafael Almeida on 04/04/25.
+//
+
+import SwiftUI
+
+struct CanvasImageModel: Identifiable {
+    var id = UUID()
+    let image: Image
+    var position: CGPoint = CGPoint(x: 100, y: 100)
+}

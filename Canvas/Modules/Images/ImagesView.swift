@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ImagesView: View {
     @StateObject var viewModel = ImagesViewModel()
-    @Binding var selectedImages: [Image]
+    @Binding var selectedImages: [CanvasImageModel]
     @Environment(\.dismiss) var dismiss
 
     let columns = [
@@ -37,7 +37,7 @@ struct ImagesView: View {
                 .resizable()
                 .scaledToFit()
                 .onTapGesture {
-                    selectedImages.append(image)
+                    selectedImages.append(CanvasImageModel(image: image))
                     dismiss()
                 }
 
