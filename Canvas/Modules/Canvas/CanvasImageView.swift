@@ -54,6 +54,11 @@ struct CanvasImageView: View {
                 .scaleEffect(scale)
                 .onTapGesture {
                     selectedImageID = canvasImageModel.id
+                    canvasImageModel.showRightSnapLine = false
+                    canvasImageModel.showLeftSnapLine = false
+                    canvasImageModel.showTopSnapLine = false
+                    canvasImageModel.showBottomSnapLine = false
+
                 }
                 .gesture(
                     DragGesture()
