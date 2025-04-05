@@ -27,12 +27,21 @@ struct CanvasView: View {
     }
 
     private func setCanvasImage() -> some View {
-        ZStack {
-            ForEach(viewModel.images.indices, id: \.self) { imageIdx in
-                CanvasImageView(canvasImageModel: $viewModel.images[imageIdx], selectedImageID: $viewModel.selectedImageID)
-                    .onChange(of: viewModel.images[imageIdx].position) { oldValue, newValue in
-                        viewModel.snapToImagesIfNeeded()
+        GeometryReader { proxy in
+            VStack {
+                ZStack {
+                    ForEach(viewModel.images.indices, id: \.self) { imageIdx in
+                        CanvasImageView(canvasImageModel: $viewModel.images[imageIdx], selectedImageID: $viewModel.selectedImageID)
+                            .onChange(of: viewModel.images[imageIdx].position) { oldValue, newValue in
+                                viewModel.snapToImagesIfNeeded()
+                                viewModel.snapToBorderIfNeeded()
+                            }
                     }
+                }
+            }
+            .border(.black, width: 4)
+            .onAppear {
+                viewModel.canvasSize = proxy.size
             }
         }
     }

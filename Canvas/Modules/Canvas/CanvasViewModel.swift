@@ -10,6 +10,7 @@ import SwiftUI
 class CanvasViewModel: ObservableObject {
     @Published var selectedImageID: UUID = UUID()
     @Published var images: [CanvasImageModel]
+    var canvasSize: CGSize = CGSize()
 
     init(images: [CanvasImageModel] = []) {
         self.images = images
@@ -60,17 +61,16 @@ class CanvasViewModel: ObservableObject {
 
     func snapToBorderIfNeeded() {
         let selectedImageIndex = images.firstIndex(where: {$0.id == selectedImageID }) ?? 0
-        let screenBounds = UIScreen.main.bounds
         let margin: CGFloat = 100
 
-        if images[selectedImageIndex].position.x >= screenBounds.width - margin && images[selectedImageIndex].position.x <= screenBounds.width - 70.0 {
-            images[selectedImageIndex].position.x = screenBounds.width - 70.0
+        if images[selectedImageIndex].position.x >= canvasSize.width - margin && images[selectedImageIndex].position.x <= canvasSize.width - 70.0 {
+            images[selectedImageIndex].position.x = canvasSize.width - 70.0
         } else if images[selectedImageIndex].position.x <= margin && images[selectedImageIndex].position.x >= 70 {
             images[selectedImageIndex].position.x = 70
         }
 
-        if images[selectedImageIndex].position.y >= screenBounds.height - margin && images[selectedImageIndex].position.y <= screenBounds.height - 50.0 {
-            images[selectedImageIndex].position.y = screenBounds.height - 50.0
+        if images[selectedImageIndex].position.y >= canvasSize.height - margin && images[selectedImageIndex].position.y <= canvasSize.height - 50.0 {
+            images[selectedImageIndex].position.y = canvasSize.height - 50.0
         } else if images[selectedImageIndex].position.y <= margin && images[selectedImageIndex].position.y >= 50 {
             images[selectedImageIndex].position.y = 50
         }
