@@ -1,5 +1,5 @@
 //
-//  CanvasImageViewModel.swift
+//  CanvasImageModel.swift
 //  Canvas
 //
 //  Created by Rafael Almeida on 04/04/25.
@@ -15,4 +15,6 @@ struct CanvasImageModel: Identifiable {
     var showLeftSnapLine = false
     var showTopSnapLine = false
     var showBottomSnapLine = false
+    var height: CGFloat = 100
+    var width: CGFloat = 140
 }

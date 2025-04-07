@@ -12,7 +12,10 @@ class CanvasViewModel: ObservableObject {
     @Published var images: [CanvasImageModel]
     var canvasSize: CGSize = CGSize()
 
-    init(images: [CanvasImageModel] = []) {
+    init(images: [CanvasImageModel] = [
+        .init(image: Image(systemName: "heart")),
+        .init(image: Image(systemName: "heart.fill"))
+    ]) {
         self.images = images
     }
 
@@ -24,33 +27,36 @@ class CanvasViewModel: ObservableObject {
                 continue
             }
 
-            if (images[selectedImageIndex].position.x - images[index].position.x) >= 140 &&
-                (images[selectedImageIndex].position.x - images[index].position.x) <= 160 {
-                images[selectedImageIndex].position.x = images[index].position.x + 140
+            let combinedWidth = (images[selectedImageIndex].width + images[index].width)/2
+            let combinedHeight = (images[selectedImageIndex].height + images[index].height)/2
+
+            if (images[selectedImageIndex].position.x - images[index].position.x) >= combinedWidth &&
+                (images[selectedImageIndex].position.x - images[index].position.x) <= combinedWidth + 20 {
+                images[selectedImageIndex].position.x = images[index].position.x + combinedWidth
                 images[index].showRightSnapLine = true
             } else {
                 images[index].showRightSnapLine = false
             }
 
-            if (images[index].position.x - images[selectedImageIndex].position.x) >= 140 &&
-                (images[index].position.x - images[selectedImageIndex].position.x) <= 160 {
-                images[selectedImageIndex].position.x = images[index].position.x - 140
+            if (images[index].position.x - images[selectedImageIndex].position.x) >= combinedWidth &&
+                (images[index].position.x - images[selectedImageIndex].position.x) <= combinedWidth + 20 {
+                images[selectedImageIndex].position.x = images[index].position.x - combinedWidth
                 images[index].showLeftSnapLine = true
             } else {
                 images[index].showLeftSnapLine = false
             }
 
-            if (images[selectedImageIndex].position.y - images[index].position.y) >= 100 &&
-                (images[selectedImageIndex].position.y - images[index].position.y) <= 120 {
-                images[selectedImageIndex].position.y = images[index].position.y + 100
+            if (images[selectedImageIndex].position.y - images[index].position.y) >= combinedHeight &&
+                (images[selectedImageIndex].position.y - images[index].position.y) <= combinedHeight + 20 {
+                images[selectedImageIndex].position.y = images[index].position.y + combinedHeight
                 images[index].showBottomSnapLine = true
             } else {
                 images[index].showBottomSnapLine = false
             }
 
-            if (images[index].position.y - images[selectedImageIndex].position.y) >= 100 &&
-                (images[index].position.y - images[selectedImageIndex].position.y) <= 120 {
-                images[selectedImageIndex].position.y = images[index].position.y - 100
+            if (images[index].position.y - images[selectedImageIndex].position.y) >= combinedHeight &&
+                (images[index].position.y - images[selectedImageIndex].position.y) <= combinedHeight + 20 {
+                images[selectedImageIndex].position.y = images[index].position.y - combinedHeight
                 images[index].showTopSnapLine = true
             } else {
                 images[index].showTopSnapLine = false
@@ -62,17 +68,19 @@ class CanvasViewModel: ObservableObject {
     func snapToBorderIfNeeded() {
         let selectedImageIndex = images.firstIndex(where: {$0.id == selectedImageID }) ?? 0
         let margin: CGFloat = 100
+        let halfWidth = images[selectedImageIndex].width / 2
+        let halfHeight = images[selectedImageIndex].height / 2
 
-        if images[selectedImageIndex].position.x >= canvasSize.width - margin && images[selectedImageIndex].position.x <= canvasSize.width - 70.0 {
-            images[selectedImageIndex].position.x = canvasSize.width - 70.0
-        } else if images[selectedImageIndex].position.x <= margin && images[selectedImageIndex].position.x >= 70 {
-            images[selectedImageIndex].position.x = 70
+        if images[selectedImageIndex].position.x >= canvasSize.width - margin && images[selectedImageIndex].position.x <= canvasSize.width - halfWidth {
+            images[selectedImageIndex].position.x = canvasSize.width - halfWidth
+        } else if images[selectedImageIndex].position.x <= margin && images[selectedImageIndex].position.x >= halfWidth {
+            images[selectedImageIndex].position.x = halfWidth
         }
 
-        if images[selectedImageIndex].position.y >= canvasSize.height - margin && images[selectedImageIndex].position.y <= canvasSize.height - 50.0 {
-            images[selectedImageIndex].position.y = canvasSize.height - 50.0
-        } else if images[selectedImageIndex].position.y <= margin && images[selectedImageIndex].position.y >= 50 {
-            images[selectedImageIndex].position.y = 50
+        if images[selectedImageIndex].position.y >= canvasSize.height - margin && images[selectedImageIndex].position.y <= canvasSize.height - halfHeight {
+            images[selectedImageIndex].position.y = canvasSize.height - halfHeight
+        } else if images[selectedImageIndex].position.y <= margin && images[selectedImageIndex].position.y >= halfHeight {
+            images[selectedImageIndex].position.y = halfHeight
         }
     }
 }

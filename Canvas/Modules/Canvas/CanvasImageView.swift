@@ -19,7 +19,7 @@ struct CanvasImageView: View {
                     .frame(width: 1, height: 2000)
                     .foregroundStyle(.yellow)
                     .position(canvasImageModel.position)
-                    .offset(x: 70)
+                    .offset(x: canvasImageModel.width/2)
             }
 
             if canvasImageModel.showLeftSnapLine {
@@ -27,7 +27,7 @@ struct CanvasImageView: View {
                     .frame(width: 1, height: 2000)
                     .foregroundStyle(.yellow)
                     .position(canvasImageModel.position)
-                    .offset(x: -70)
+                    .offset(x: -canvasImageModel.width/2)
             }
 
             if canvasImageModel.showBottomSnapLine {
@@ -35,7 +35,7 @@ struct CanvasImageView: View {
                     .frame(width: 2000, height: 1)
                     .foregroundStyle(.yellow)
                     .position(canvasImageModel.position)
-                    .offset(y: 50)
+                    .offset(y: canvasImageModel.height/2)
             }
 
             if canvasImageModel.showTopSnapLine {
@@ -43,15 +43,14 @@ struct CanvasImageView: View {
                     .frame(width: 2000, height: 1)
                     .foregroundStyle(.yellow)
                     .position(canvasImageModel.position)
-                    .offset(y: -50)
+                    .offset(y: -canvasImageModel.height/2)
             }
 
             canvasImageModel.image
                 .resizable()
-                .frame(width: 140, height: 100)
+                .frame(width: canvasImageModel.width, height: canvasImageModel.height)
                 .border(selectedImageID == canvasImageModel.id ? Color.yellow : Color.clear, width: 4)
                 .position(canvasImageModel.position)
-                .scaleEffect(scale)
                 .onTapGesture {
                     selectedImageID = canvasImageModel.id
                     canvasImageModel.showRightSnapLine = false
@@ -60,6 +59,7 @@ struct CanvasImageView: View {
                     canvasImageModel.showBottomSnapLine = false
 
                 }
+                .cornerRadius(10)
                 .gesture(
                     DragGesture()
                         .onChanged { value in
@@ -71,7 +71,9 @@ struct CanvasImageView: View {
                     MagnificationGesture()
                         .onChanged { value in
                             guard selectedImageID == canvasImageModel.id else { return }
-                            scale = value
+                            canvasImageModel.height = 100 * value
+                            canvasImageModel.width = 140 * value
+                            selectedImageID = canvasImageModel.id
                         }
                 )
         }

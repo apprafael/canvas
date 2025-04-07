@@ -14,13 +14,14 @@ struct CanvasView: View {
     var body: some View {
         VStack {
             setCanvasImage()
+                .background(.white)
             Spacer()
             setTabView()
                 .sheet(isPresented: $isSheetPresented) {
                     ImagesView(selectedImages: $viewModel.images)
                 }
         }
-        .background(Color.white)
+        .background(Color.black)
         .onTapGesture {
             viewModel.selectedImageID = UUID()
         }
@@ -53,6 +54,12 @@ struct CanvasView: View {
             } label: {
                 Image(systemName: "plus")
                     .frame(height: 50)
+                    .foregroundStyle(.black)
+                    .background {
+                        Circle()
+                            .foregroundStyle(.white)
+                            .frame(width: 100)
+                    }
             }
         }
         .frame(height: 100)
