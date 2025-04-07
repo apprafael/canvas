@@ -15,6 +15,7 @@ struct CanvasView: View {
         VStack {
             setCanvasImage()
                 .background(.white)
+                .clipped()
             Spacer()
             setTabView()
                 .sheet(isPresented: $isSheetPresented) {
