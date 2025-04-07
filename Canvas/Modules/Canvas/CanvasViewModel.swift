@@ -12,10 +12,7 @@ class CanvasViewModel: ObservableObject {
     @Published var images: [CanvasImageModel]
     var canvasSize: CGSize = CGSize()
 
-    init(images: [CanvasImageModel] = [
-        .init(image: Image(systemName: "heart")),
-        .init(image: Image(systemName: "heart.fill"))
-    ]) {
+    init(images: [CanvasImageModel] = []) {
         self.images = images
     }
 

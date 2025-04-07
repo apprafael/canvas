@@ -12,7 +12,7 @@ class ImagesViewModel: ObservableObject {
 
     func fetchData() {
         let url = "https://api.pexels.com/v1/curated?per_page=10"
-        let headers = ["Authorization": "API KEY"]
+        let headers = ["Authorization": "0rWBGhCRoFiVbbq4duycTLqsvROdrjKqHdGkciUBYdubEU21DoqNC6yY"]
 
         NetworkManager.shared.request(urlString: url, headers: headers, responseType: PhotoResponseModel.self) { [weak self] result in
             switch result {
